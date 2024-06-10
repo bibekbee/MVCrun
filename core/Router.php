@@ -1,6 +1,6 @@
 <?php
 
-namespace app\core;
+namespace app\Core;
 
 class Router{
     public array $routes = [];
@@ -9,9 +9,14 @@ class Router{
     }
 
     public function resolve(){
-        // dd($_SERVER);
         $method = strtolower($_SERVER['REQUEST_METHOD']);
-        $path = $_SERVER['REQUEST_URI'];
-        call_user_func($this->routes[$method][$path]);
+        $path = parse_url($_SERVER['REQUEST_URI'])['path'];
+        $callback = $this->routes[$method][$path] ?? false;
+        $callback ? call_user_func($callback) : $this->err();
+    }
+
+    public function err(){
+        http_response_code(404);
+        echo "Not Found";
     }
 }

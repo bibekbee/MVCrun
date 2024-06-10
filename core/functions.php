@@ -6,3 +6,7 @@ function dd($dump){
     echo '</pre>';
     die();
 }
+
+function base_path($path){
+    return __DIR__ . '/../' . $path;
+}
