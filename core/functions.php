@@ -10,3 +10,7 @@ function dd($dump){
 function base_path($path){
     return __DIR__ . '/../' . $path;
 }
+
+function view($path){
+    return require(__DIR__. '/../resources/views/' . $path); 
+}
