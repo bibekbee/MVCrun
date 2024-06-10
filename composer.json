@@ -1,0 +1,16 @@
+{
+    "name": "bibekbhattarai/mv-crun",
+    "type": "library",
+    "authors": [
+        {
+            "name": "bibekbee",
+            "email": "bibekbee23@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\" : "./"
+        }
+    },
+    "require": {}
+}
