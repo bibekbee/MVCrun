@@ -11,6 +11,7 @@ function base_path($path){
     return __DIR__ . '/../' . $path;
 }
 
-function view($path){
+function view($path, $attr = []){
+    extract($attr);
     return require(__DIR__. '/../resources/views/' . $path); 
 }

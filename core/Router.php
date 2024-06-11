@@ -12,6 +12,9 @@ class Router{
         $method = strtolower($_SERVER['REQUEST_METHOD']);
         $path = parse_url($_SERVER['REQUEST_URI'])['path'];
         $callback = $this->routes[$method][$path] ?? false;
+        if(is_array($callback)){
+            $callback[0] = new $callback[0]();
+        }
         $callback ? call_user_func($callback) : $this->err();
     }
 

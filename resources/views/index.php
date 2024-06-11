@@ -2,7 +2,7 @@
 
 <main class="mx-5 lg:mx-32 mt-10">
     <div>
-        <p>This is the index</p>
+            <p>Hello there <?= $name ?></p>
     </div>
 </main>
 
