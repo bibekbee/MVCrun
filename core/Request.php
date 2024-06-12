@@ -22,9 +22,13 @@ class Request{
                 $parts = explode('|', $value);
                 $args[$key] = array_combine($parts, $parts);
             }
-            $this->errors[$key] = $this->rule($key, $args[$key]);
+            $result = $this->rule($key, $args[$key]);
+            if($result){$this->errors[$key] =  $result;}
         }
-
+        if(empty($this->errors)){
+            return $this->input;
+        }
+        return false;
     }
 
     public function rule($key, $value){

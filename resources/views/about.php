@@ -6,4 +6,3 @@
     </div>
 </main>
 
-<?php view('components/footer.php') ?>

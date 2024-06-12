@@ -15,3 +15,8 @@ function view($path, $attr = []){
     extract($attr);
     return require(__DIR__. '/../resources/views/' . $path); 
 }
+
+function redirect($path){
+    header("location: $path");
+    exit();
+}
