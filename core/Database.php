@@ -7,9 +7,9 @@ class Database{
     public $conn;
     public $statement;
 
-    public function __construct($dsn, $user, $pass = ''){
+    public function __construct(array $config){
         try{
-            $this->conn = PDO($dsn, $user, $pass, [
+            $this->conn = new PDO($config['dsn'], $config['user'], $config['pass'], [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);

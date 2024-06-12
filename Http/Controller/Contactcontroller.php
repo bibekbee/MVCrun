@@ -3,6 +3,7 @@
 namespace app\Http\Controller;
 
 use app\Core\Request;
+use app\Core\Application;
 
 class Contactcontroller extends Controller{
     public function index(){ 
@@ -16,6 +17,8 @@ class Contactcontroller extends Controller{
             'email' => 'required|valid'
         ]);
         if($result){
+            $db = Application::container()->resolve('Core\Database');
+            dd($db);
             return redirect('/');
         }
         return view('contact/index.php', ['errors' => $request->errors , 'input' => $request->input]);
