@@ -2,7 +2,8 @@
 
 namespace app\Http\Controller;
 
-class Navcontroller{
+
+class Navcontroller extends Controller{
 
     public function index(){
         return view('index.php', ['name' => 'Bikash']);
@@ -11,4 +12,8 @@ class Navcontroller{
     public function about(){
         return view('about.php');
     }
+
+   
+
+
 }
