@@ -3,7 +3,7 @@
 class Contact{
 
     public function up(){
-        echo "Applying Migrations";
+        echo "Applying Migrations Contact" , PHP_EOL;
     }
 
     public function down(){

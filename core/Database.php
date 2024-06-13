@@ -31,9 +31,33 @@ class Database{
     public function applyMigrations()
     {
         $this->createMigrationsTable();
-        $result = $this->getAppliedMigrations();
-        $files = scandir(dirname(__DIR__) . '/migrations');
-        dd($files);
+        $applied = $this->getAppliedMigrations();
+
+        $files = array_diff(scandir(dirname(__DIR__) . '/migrations'), [".", ".."]);
+        $files = array_map(fn($m) => pathinfo($m, PATHINFO_FILENAME), $files);
+
+        $toapply = array_diff($files, $applied);
+        
+        $newMigrationList = [];
+        foreach($toapply as $apply){
+            require_once(dirname(__DIR__) . '/migrations/'. $apply.'.php');
+            //$fileName = pathinfo($apply, PATHINFO_FILENAME); //migration fileName
+            $pos = strpos($apply, '_') + 1;
+            $className = strtoupper($apply[$pos]) . substr($apply, $pos + 1); //getting the migration Class
+            $this->log("Applying migrations for " . $apply);
+            (new $className)->up();
+            $newMigrationList[] = $apply;
+        }
+        
+        if(!empty($newMigrationList)){
+            $this->save($newMigrationList);
+        }else{
+            echo "No Migrations to Apply";
+            exit();
+        }
+        echo PHP_EOL;
+        $this->log("All migrations applied successfully");
+        exit();
     }
 
     protected function createMigrationsTable()
@@ -51,6 +75,17 @@ class Database{
         $statement = $this->conn->prepare("SELECT migration from migrations");
         $statement->execute();
 
-        return $statement->fetchAll();
+        return $statement->fetchAll(PDO::FETCH_COLUMN);
+    }
+
+    protected function save(array $migrations){
+        $migrationlist = implode(',' , array_map(fn($m) => "('$m')" , $migrations));
+
+        $statement = $this->conn->prepare("INSERT INTO migrations (migration) VALUE $migrationlist");
+        $statement->execute();
+    }
+
+    protected function log($msg){
+        echo '['. date('Y-m-d H:i:s') . ']' . ' - ' . $msg . PHP_EOL;
     }
 }

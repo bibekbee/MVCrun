@@ -2,7 +2,7 @@
 
 class Somthing{
     public function up(){
-        echo "Applying Migrations";
+        echo "Applying Migrations Somthing" . PHP_EOL;
     }
 
     public function down(){
