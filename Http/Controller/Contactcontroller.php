@@ -18,7 +18,11 @@ class Contactcontroller extends Controller{
         ]);
         if($result){
             $db = Application::container()->resolve('Core\Database');
-            dd($db);
+            $db->query('INSERT INTO contacts(first_name, last_name, email) VALUE(:first_name, :last_name, :email)', [
+                ':first_name' => $result['first_name'],
+                ':last_name' => $result['last_name'],
+                ':email' => $result['email']
+            ]);
             return redirect('/');
         }
         return view('contact/index.php', ['errors' => $request->errors , 'input' => $request->input]);
