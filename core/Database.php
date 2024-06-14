@@ -41,7 +41,7 @@ class Database{
         $newMigrationList = [];
         foreach($toapply as $apply){
             require_once(dirname(__DIR__) . '/migrations/'. $apply.'.php');
-            //$fileName = pathinfo($apply, PATHINFO_FILENAME); //migration fileName
+    
             $pos = strpos($apply, '_') + 1;
             $className = strtoupper($apply[$pos]) . substr($apply, $pos + 1); //getting the migration Class
             $this->log("Applying migrations for " . $apply);

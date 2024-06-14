@@ -18,7 +18,7 @@ class Contactcontroller extends Controller{
         ]);
         if($result){
             $db = Application::container()->resolve('Core\Database');
-            $db->query('INSERT INTO contacts(first_name, last_name, email) VALUE(:first_name, :last_name, :email)', [
+            $db->query('INSERT INTO contact(first_name, last_name, email) VALUE(:first_name, :last_name, :email)', [
                 ':first_name' => $result['first_name'],
                 ':last_name' => $result['last_name'],
                 ':email' => $result['email']

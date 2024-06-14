@@ -1,12 +1,26 @@
 <?php
+use app\Core\Application;
 
 class Contact{
+    protected $db;
+
+    public function __construct(){
+        $this->db = Application::container()->resolve('Core\Database');
+    }
 
     public function up(){
-        echo "Applying Migrations Contact" , PHP_EOL;
+        $sql = "CREATE TABLE IF NOT EXISTS contact(
+            id int AUTO_INCREMENT PRIMARY KEY,
+            first_name varchar(255) NOT NULL,
+            last_name varchar(255),
+            email varchar(255) NOT NULL,
+            create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE = InnoDB;";
+        $this->db->query($sql);
     }
 
     public function down(){
-        echo "Droping the table Contact";
+        $sql = "DROP TABLE contact";
+        $this->db->query($sql);
     }
 }
