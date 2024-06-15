@@ -18,14 +18,15 @@ class Database{
         }
     }
 
-    public function query($query, $prams = []) {
+    public function query($query, $params = []) {
+        //dd($query, $params);
         if($this->conn){
         $this->statement = $this->conn->prepare($query);
-        $this->statement->execute($prams);
+        $this->statement->execute($params);
         }else{
           $this->statement = [];
         }
-        return $this;
+        return $this->statement;
   }
 
     public function applyMigrations()

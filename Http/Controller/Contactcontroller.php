@@ -4,6 +4,7 @@ namespace app\Http\Controller;
 
 use app\Core\Request;
 use app\Core\Application;
+use app\Http\Models\Contactmodel;
 
 class Contactcontroller extends Controller{
     public function index(){ 
@@ -17,13 +18,9 @@ class Contactcontroller extends Controller{
             'email' => 'required|valid'
         ]);
         if($result){
-            $db = Application::container()->resolve('Core\Database');
-            $db->query('INSERT INTO contact(first_name, last_name, email) VALUE(:first_name, :last_name, :email)', [
-                ':first_name' => $result['first_name'],
-                ':last_name' => $result['last_name'],
-                ':email' => $result['email']
-            ]);
-            return redirect('/');
+            $contact = new Contactmodel;
+            $contact->create($result);
+            $contact->save();
         }
         return view('contact/index.php', ['errors' => $request->errors , 'input' => $request->input]);
     }

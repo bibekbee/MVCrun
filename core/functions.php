@@ -1,9 +1,11 @@
 <?php
 
-function dd($dump){
+function dd(...$attrs){
+    foreach($attrs as $attr){
     echo '<pre>';
-    var_dump($dump);
+    var_dump($attr);
     echo '</pre>';
+    }
     die();
 }
 
