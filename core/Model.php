@@ -22,6 +22,11 @@ abstract class Model{
         $this->attributes = $attr;
     }
 
+    public function fetchAll(){
+        $tablename = $this->tablename();
+        return $this->db->query("SELECT * FROM $tablename")->fetchAll();
+    }
+
     public function getattr(){
         $attr = [];
         foreach($this->attributes as $key => $value){

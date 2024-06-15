@@ -25,6 +25,7 @@ class Contactcontroller extends Controller{
         return view('contact/index.php', ['errors' => $request->errors , 'input' => $request->input]);
     }
 
+
 }
 
 
