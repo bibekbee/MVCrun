@@ -19,10 +19,9 @@ class Database{
     }
 
     public function query($query, $params = []) {
-        //dd($query, $params);
         if($this->conn){
-        $this->statement = $this->conn->prepare($query);
-        $this->statement->execute($params);
+          $this->statement = $this->conn->prepare($query);
+          $this->statement->execute($params);
         }else{
           $this->statement = [];
         }

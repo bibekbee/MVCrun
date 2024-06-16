@@ -15,12 +15,13 @@ class Contactcontroller extends Controller{
         $result = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|valid'
+            'email' => 'required|unique|valid'
         ]);
         if($result){
             $contact = new Contactmodel;
             $contact->create($result);
             $contact->save();
+            redirect('/');
         }
         return view('contact/index.php', ['errors' => $request->errors , 'input' => $request->input]);
     }

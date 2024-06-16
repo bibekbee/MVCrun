@@ -15,6 +15,7 @@ abstract class Model{
         $tablename = $this->tablename();
         $attr = (object) $this->getattr();
         $data = $this->db->query("INSERT INTO $tablename($attr->key) VALUES($attr->colonKey)", $attr->value);
+        
     }
 
     public function create(array $attr)
