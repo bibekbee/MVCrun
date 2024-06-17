@@ -22,3 +22,7 @@ function redirect($path){
     header("location: $path");
     exit();
 }
+
+function bcrypt($pass){
+    return password_hash($pass,PASSWORD_DEFAULT);
+}

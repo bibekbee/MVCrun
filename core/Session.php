@@ -4,7 +4,7 @@ namespace app\Core;
 
 class Session{
     
-    public static function put($key, $value ){
+    public static function put($key, $value){
         $_SESSION[$key] = $value;
     }
 
@@ -28,6 +28,10 @@ class Session{
         };
 
         return [];
+    }
+
+    public static function clear(){
+        $_SESSION = [];
     }
 
     public static function clearFlash(){
