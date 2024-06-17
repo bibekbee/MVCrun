@@ -4,7 +4,8 @@ namespace app\Core;
 class Request{
     public $input;
     public $errors = [];
-    public $rules = ['required', 'valid', 'unique'];
+    public $table = '';
+    public $rules = ['required', 'valid', 'unique', 'min', 'exist'];
     
     public function __construct(){
         if(!empty($_GET)){
@@ -56,6 +57,13 @@ class Request{
                 $result = $msg;
             }
         }
+
+        if($check['min']){
+            $msg = $this->min($key, $check);
+            if($msg != ''){
+                $result = $msg;
+            }
+        }
         
         if($check['valid']){
             $msg = $this->valid($key, $check);
@@ -65,8 +73,16 @@ class Request{
             }
         }
 
+
         if($check['unique']){
             $msg = $this->unique($key, $check);
+            if($msg != ''){
+                $result = $msg;
+            }
+        }
+
+        if($check['exist']){
+            $msg = $this->exist($key, $check);
             if($msg != ''){
                 $result = $msg;
             }
@@ -80,16 +96,20 @@ class Request{
         $msg = [
             'required' => 'Valid input required',
             'valid' => 'Valid email address is required',
-            'unique' => 'This email is already used'
+            'unique' => 'This email is already used',
+            'noemail' => 'Password or email does not match',
+            'min' => 'Password must atleast 8 char long',
         ];
         return $msg[$rule] ?? '';
     }
 
     public function unique($key, $value){
-        $db = Application::container()->resolve('Core\Database');
-        
-        $data = $db->query("SELECT * FROM contact where email = :email", [':email' => $this->input[$key]])->fetchObject();
+        $data = false;
+        if($this->table != ''){
+        $db = Application::container()->resolve('Core\Database');    
+        $data = $db->query("SELECT * FROM $this->table where email = :email", [':email' => $this->input[$key]])->fetchObject();
         $data = $data ? true : false;
+        }
        
         if($key == 'email' && $data){
                 return $this->message($value['unique']);
@@ -109,6 +129,30 @@ class Request{
     public function valid($key, $value){
         if($key == 'email' && !filter_var($this->input[$key], FILTER_VALIDATE_EMAIL)){
                     return $this->message($value['valid']);
+        }
+        else{
+            return '';
+        }
+    }
+
+    public function min($key, $value){
+        if(strlen($this->input[$key]) < 8){
+            return $this->message($value['min']);
+        }
+    }
+
+    public function exist($key, $value){
+        if($key == 'email')
+        {
+            $data = true;
+            if($this->table != ''){
+            $db = Application::container()->resolve('Core\Database');
+            $data = $db->query("SELECT * FROM $this->table where email = :email", [':email' => $this->input[$key]])->fetchObject();
+            }
+
+            if(!$data){
+                return $this->message('noemail');
+            }
         }else{
             return '';
         }

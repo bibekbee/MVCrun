@@ -13,6 +13,7 @@ class Contactcontroller extends Controller{
     }
 
     public function store(Request $request){
+        $request->table = 'contact';
         $result = $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
@@ -25,12 +26,10 @@ class Contactcontroller extends Controller{
             $contact->save();
             redirect('/');
         }
+
         Session::flash('input', $request->input);
         redirect('contact');
-       
     }
-
-
 }
 
 
