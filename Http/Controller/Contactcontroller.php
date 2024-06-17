@@ -5,10 +5,11 @@ namespace app\Http\Controller;
 use app\Core\Request;
 use app\Core\Application;
 use app\Http\Models\Contactmodel;
+use app\Core\Session;
 
 class Contactcontroller extends Controller{
     public function index(){ 
-        return view('contact/index.php');
+        return view('contact/index.php', ['errors' => Session::getflash('errors') , 'input' => Session::getflash('input')]);
     }
 
     public function store(Request $request){
@@ -17,13 +18,16 @@ class Contactcontroller extends Controller{
             'last_name' => 'required',
             'email' => 'required|unique|valid'
         ]);
+       
         if($result){
             $contact = new Contactmodel;
             $contact->create($result);
             $contact->save();
             redirect('/');
         }
-        return view('contact/index.php', ['errors' => $request->errors , 'input' => $request->input]);
+        Session::flash('input', $request->input);
+        redirect('contact');
+       
     }
 
 

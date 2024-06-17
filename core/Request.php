@@ -29,6 +29,7 @@ class Request{
         if(empty($this->errors)){
             return $this->input;
         }
+        Session::flash('errors', $this->errors);
         return false;
     }
 

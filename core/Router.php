@@ -22,6 +22,7 @@ class Router{
             $callback[0] = new $callback[0]();
         }
         $callback ? call_user_func($callback, $this->request) : $this->err();
+
     }
 
     public function err(){
