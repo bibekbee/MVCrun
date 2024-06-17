@@ -18,7 +18,7 @@ class Logincontroller extends Controller{
         $request->table = 'user';
         $result = $request->validate([
             'email' => 'required|valid|exist',
-            'password' => 'required|valid',
+            'password' => 'required|min|exist',
         ]);
        
         if($result){
