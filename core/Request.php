@@ -155,7 +155,6 @@ class Request{
             }
         }if($key == 'password')
         {
- 
             $attempt = Auth::attempt($this->input['email'], $this->input['password'], $this->table);
             if(!$attempt){
                 return $this->message('noemail');

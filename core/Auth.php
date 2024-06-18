@@ -12,7 +12,6 @@ class Auth{
         if($result && password_verify($password, $result[0]['password'])){
             return $result;
         }else{
-            $_SESSION['flash']['errors']['email'] = 'Password or email does not match';
             return false;
         }
     }

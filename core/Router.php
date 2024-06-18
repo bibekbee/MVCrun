@@ -21,8 +21,8 @@ class Router{
         $method = strtolower($_SERVER['REQUEST_METHOD']);
         $path = parse_url($_SERVER['REQUEST_URI'])['path'];
 
-        $middleware = $this->routes['get'][$path]['middleware'] ?? false;
-        if($middleware == 'auth'){Outh::user();}
+        $middleware = $this->routes['get'][$path] ?? false;
+        $middleware['middleware'] ?? false ? $this->middlewareLogic($middleware, $path) : false;
         
         $callback = $this->routes[$method][$path] ?? false;
         if(is_array($callback)){
@@ -36,12 +36,29 @@ class Router{
         view('_404.php');
     }
 
-    public function auth(){
-        $user = $_SESSION['user'] ?? false;
-        //dd($user);
-        if(!$user){
+    public function auth($string){
         $last = array_key_last($this->routes['get']);
-        $this->routes['get'][$last]['middleware'] = 'auth';
+        if($string == 'user'){
+            $this->routes['get'][$last]['middleware']['auth'] = 'user';
+        }else if($string == 'guest'){
+            $this->routes['get'][$last]['middleware']['auth'] = 'guest';
+        }else{
+            return false;
+        }    
+    }
+
+    public function middlewareLogic($middleware, $path){
+        if($middleware['middleware']['auth'] == 'user'){
+            if(!Outh::user()){
+                unset($this->routes['get'][$path]['middleware']);
+            }
+        } 
+       
+        if($middleware['middleware']['auth'] == 'guest'){
+             if(!Outh::guest()){
+                unset($this->routes['get'][$path]['middleware']);
+             }
         }
+        
     }
 }
