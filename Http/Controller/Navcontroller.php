@@ -10,8 +10,8 @@ class Navcontroller extends Controller{
         return view('index.php', ['name' => 'Bikash', 'contacts' => $contactdata]);
     }
 
-    public function about(){
-        return view('about.php');
+    public function profile(){
+        return view('profile.php');
     }
 
    

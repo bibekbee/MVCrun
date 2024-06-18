@@ -16,7 +16,9 @@
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                 <div>
                 <a href="/" class="rounded-md <?= $_SERVER['REQUEST_URI'] == '/' ? 'bg-gray-900' : '' ?> px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white" aria-current="page">Home</a>
-                <a href="/about" class="rounded-md <?= $_SERVER['REQUEST_URI'] == '/about' ? 'bg-gray-900' : '' ?> px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">About</a>
+                <?php if(isset($_SESSION['user'])) : ?>
+                <a href="/profile" class="rounded-md <?= $_SERVER['REQUEST_URI'] == '/profile' ? 'bg-gray-900' : '' ?> px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Profile</a>
+                <?php endif; ?>
                 <a href="/contact" class="rounded-md <?= $_SERVER['REQUEST_URI'] == '/contact' ? 'bg-gray-900' : '' ?> px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Contact</a>
                 </div>
 

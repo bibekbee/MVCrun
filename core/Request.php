@@ -5,7 +5,7 @@ class Request{
     public $input;
     public $errors = [];
     public $table = '';
-    public $rules = ['required', 'valid', 'unique', 'min', 'exist'];
+    public $rules = ['required', 'valid', 'unique', 'min', 'exist', 'confirm'];
     
     public function __construct(){
         if(!empty($_GET)){
@@ -73,6 +73,14 @@ class Request{
             }
         }
 
+        if($check['confirm']){
+            $msg = $this->confirm($key, $check);
+           
+            if($msg != ''){
+                $result = $msg;
+            }
+        }
+
 
         if($check['unique']){
             $msg = $this->unique($key, $check);
@@ -99,6 +107,7 @@ class Request{
             'unique' => 'This email is already used',
             'noemail' => 'Password or email does not match',
             'min' => 'Password must atleast 8 char long',
+            'confirm' => 'Confirm password does not match'
         ];
         return $msg[$rule] ?? '';
     }
@@ -164,6 +173,20 @@ class Request{
             return '';
         }
 
+    }
+
+    public function confirm($key, $value){
+        if($key == 'password'){
+           if($this->input['password'] != $this->input['confirm_password']){
+            return $this->message('confirm');
+           };
+        }else if($key == 'confirm_password') {
+            if($this->input['password'] != $this->input['confirm_password']){
+                return $this->message('confirm');
+               };
+        }else{
+            return '';
+        }
     }
 
 

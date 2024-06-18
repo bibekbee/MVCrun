@@ -7,7 +7,7 @@ class Outh{
             return false;
         }
         http_response_code(403);
-        view('unauthorized.php');
+        view('errors.php', ['errMessage' => 'You have to login to view this page']);
         exit();
     }
 

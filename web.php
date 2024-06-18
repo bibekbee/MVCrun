@@ -9,8 +9,8 @@ use app\Core\Session;
 
 $app = new Application();
 $app->router->get('/', [Navcontroller::class, 'index']); 
-$app->router->get('/about', [Navcontroller::class, 'about']); 
-$app->router->get('/contact', [Contactcontroller::class, 'index'])->auth('user');
+$app->router->get('/profile', [Navcontroller::class, 'profile'])->auth('user'); 
+$app->router->get('/contact', [Contactcontroller::class, 'index']);
 $app->router->post('/contact', [Contactcontroller::class, 'store']); 
 $app->router->get('/login', [Logincontroller::class, 'index'])->auth('guest'); 
 $app->router->post('/login', [Logincontroller::class, 'store']); 

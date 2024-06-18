@@ -16,8 +16,8 @@ class Registercontroller extends Controller{
         $request->table = 'user';
         $result = $request->validate([
             'email' => 'required|valid|unique',
-            'password' => 'required|valid|min',
-            'confirm_password' => 'required|valid|min',
+            'password' => 'required|valid|min|',
+            'confirm_password' => 'required|valid|min|confirm',
         ]);
         if($result){
             $contact = new Usermodel;

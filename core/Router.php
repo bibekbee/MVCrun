@@ -21,8 +21,8 @@ class Router{
         $method = strtolower($_SERVER['REQUEST_METHOD']);
         $path = parse_url($_SERVER['REQUEST_URI'])['path'];
 
-        $middleware = $this->routes['get'][$path] ?? false;
-        $middleware['middleware'] ?? false ? $this->middlewareLogic($middleware, $path) : false;
+        $middleware = $this->routes['get'][$path]['middleware'] ?? false;
+        $middleware ?? false ? $this->middlewareLogic($middleware, $path) : false;
         
         $callback = $this->routes[$method][$path] ?? false;
         if(is_array($callback)){
@@ -48,13 +48,13 @@ class Router{
     }
 
     public function middlewareLogic($middleware, $path){
-        if($middleware['middleware']['auth'] == 'user'){
+        if($middleware['auth'] == 'user'){
             if(!Outh::user()){
                 unset($this->routes['get'][$path]['middleware']);
             }
         } 
        
-        if($middleware['middleware']['auth'] == 'guest'){
+        if($middleware['auth'] == 'guest'){
              if(!Outh::guest()){
                 unset($this->routes['get'][$path]['middleware']);
              }
