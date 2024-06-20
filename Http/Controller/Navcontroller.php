@@ -6,12 +6,12 @@ use app\Http\Models\Contactmodel;
 class Navcontroller extends Controller{
 
     public function index(){
-        $contactdata = (new Contactmodel)->fetchAll();
-        return view('index.php', ['name' => 'Bikash', 'contacts' => $contactdata]);
+        return view('index.php', ['name' => 'Bikash']);
     }
 
     public function profile(){
-        return view('profile.php');
+        $contactdata = (new Contactmodel)->fetchAll();
+        return view('profile.php', ['contacts' => $contactdata]);
     }
 
    
