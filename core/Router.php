@@ -20,7 +20,6 @@ class Router{
         $this->request = new Request();
         $method = strtolower($_SERVER['REQUEST_METHOD']);
         $path = parse_url($_SERVER['REQUEST_URI'])['path'];
-
         $middleware = $this->routes['get'][$path]['middleware'] ?? false;
         $middleware ?? false ? $this->middlewareLogic($middleware, $path) : false;
         

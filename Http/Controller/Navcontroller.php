@@ -14,7 +14,8 @@ class Navcontroller extends Controller{
         return view('profile.php', ['contacts' => $contactdata]);
     }
 
-   
-
+    public function detail($id){
+        echo "hi there";
+    }
 
 }
