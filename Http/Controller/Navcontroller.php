@@ -15,7 +15,9 @@ class Navcontroller extends Controller{
     }
 
     public function detail($id){
-        echo "hi there";
+        $contactdata = (new Contactmodel)->find($id);
+        if(!$contactdata){pageNotFound(); exit();}
+        view('detail.php', ['contact' => $contactdata]);
     }
 
 }

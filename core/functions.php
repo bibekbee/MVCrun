@@ -26,3 +26,8 @@ function redirect($path){
 function bcrypt($pass){
     return password_hash($pass,PASSWORD_DEFAULT);
 }
+
+function pageNotFound(){
+    http_response_code(404);
+    view('_404.php');
+}

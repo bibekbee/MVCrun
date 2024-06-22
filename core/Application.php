@@ -1,6 +1,5 @@
 <?php
 namespace app\Core;
-//require_once(__DIR__ . '/Router.php');
 class Application{
 
     public Router $router;

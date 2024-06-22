@@ -20,19 +20,26 @@ class Router{
         $this->request = new Request();
         $method = strtolower($_SERVER['REQUEST_METHOD']);
         $path = parse_url($_SERVER['REQUEST_URI'])['path'];
+
         $middleware = $this->routes['get'][$path]['middleware'] ?? false;
         $middleware ?? false ? $this->middlewareLogic($middleware, $path) : false;
         
         $callback = $this->routes[$method][$path] ?? false;
+
+        //for the routes with id followed by it
+        if(!$callback){
+            $this->routeWithId($path, $method); 
+        }
+     
         if(is_array($callback)){
             $callback[0] = new $callback[0]();
         }
         $callback ? call_user_func($callback, $this->request) : $this->err();
+        exit();
     }
 
     public function err(){
-        http_response_code(404);
-        view('_404.php');
+        pageNotFound();
     }
 
     public function auth($string){
@@ -59,5 +66,22 @@ class Router{
              }
         }
         
+    }
+
+    public function routeWithId($path, $method){
+        $parts = explode("/", $path, 3);
+        $callback = '';
+        $num = $parts[2] ?? false ? is_numeric($parts[2]) : false;
+            if($num){
+                $path = '/' . $parts[1] . '/{id}';
+                $id = $parts[2];
+                $callback = $this->routes[$method][$path] ?? false;
+            }
+        
+        if(is_array($callback)){
+            $callback[0] = new $callback[0]();
+        }
+        $callback ? call_user_func($callback, $id) : $this->err();
+        exit();
     }
 }

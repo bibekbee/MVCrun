@@ -9,5 +9,10 @@ class Contactmodel extends Model
     {
         return 'contact';
     } 
+
+    public function find($id){
+        $tablename = $this->tablename();
+        return $this->db->query("SELECT * FROM $tablename WHERE id = :id", [':id' => $id])->fetch();
+    }
     
 }
