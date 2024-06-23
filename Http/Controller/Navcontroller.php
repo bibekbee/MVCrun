@@ -20,4 +20,8 @@ class Navcontroller extends Controller{
         view('detail.php', ['contact' => $contactdata]);
     }
 
+    public function update($id){
+        dd("Hi there I received $id");
+    }
+
 }

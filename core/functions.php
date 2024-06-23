@@ -31,3 +31,12 @@ function pageNotFound(){
     http_response_code(404);
     view('_404.php');
 }
+
+function rebase($arr, $str){
+    $fullString = '';
+    foreach($arr as $a){
+        $fullString =  $fullString . $a . $str;
+    }
+
+    return $fullString;
+}

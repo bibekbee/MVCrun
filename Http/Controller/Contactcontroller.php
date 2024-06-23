@@ -30,6 +30,23 @@ class Contactcontroller extends Controller{
         Session::flash('input', $request->input);
         redirect('contact');
     }
+
+    public function detail($id){
+        $contactdata = (new Contactmodel)->find($id);
+        if(!$contactdata){pageNotFound(); exit();}
+        view('contact/detail.php', ['contact' => $contactdata]);
+    }
+
+    public function edit($id){
+        $input = (new Contactmodel)->find($id);
+        if(!$input){pageNotFound(); exit();}
+        view('contact/update.php', ['input' => $input]);
+    }
+
+    public function update($id){
+        //Update Contact records here
+        dd("I received a post request from id: $id");
+    }
 }
 
 

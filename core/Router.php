@@ -69,12 +69,15 @@ class Router{
     }
 
     public function routeWithId($path, $method){
-        $parts = explode("/", $path, 3);
+        $parts = explode("/", $path);
+        $newPath = rebase(array_slice($parts, 0, -1), '/');
+        $arrayLength = count($parts);
+        $numpart = $parts[$arrayLength - 1];
         $callback = '';
-        $num = $parts[2] ?? false ? is_numeric($parts[2]) : false;
+        $num = $numpart ?? false ? is_numeric($numpart) : false;
             if($num){
-                $path = '/' . $parts[1] . '/{id}';
-                $id = $parts[2];
+                $path = $newPath . '{id}';
+                $id = $numpart;
                 $callback = $this->routes[$method][$path] ?? false;
             }
         
