@@ -84,7 +84,13 @@ class Router{
         if(is_array($callback)){
             $callback[0] = new $callback[0]();
         }
-        $callback ? call_user_func($callback, $id) : $this->err();
+
+        if($method == 'get'){
+            $callback ? call_user_func($callback, $id) : $this->err();
+        }else{
+            $callback ? call_user_func($callback, $this->request, $id) : $this->err();
+        }
+        
         exit();
     }
 }

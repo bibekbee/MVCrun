@@ -5,7 +5,7 @@
         <p>Welcome <?= $_SESSION['user'] ?></p>
     </div>
     <hr>
-    <div class="flex gap-4 justify-between items-center mt-10">
+    <div class="flex flex-wrap gap-4 justify-between items-center mt-10">
             <?php foreach($contacts as $contact) : ?>
                 <div class="my-2 py-4 rounded-lg space-y-2 bg-gray-600 text-gray-50 p-10 text-center">
                     <p><?=$contact['first_name']?> <?=$contact['last_name']?></p>

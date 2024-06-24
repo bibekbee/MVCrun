@@ -14,14 +14,6 @@ class Navcontroller extends Controller{
         return view('profile.php', ['contacts' => $contactdata]);
     }
 
-    public function detail($id){
-        $contactdata = (new Contactmodel)->find($id);
-        if(!$contactdata){pageNotFound(); exit();}
-        view('detail.php', ['contact' => $contactdata]);
-    }
-
-    public function update($id){
-        dd("Hi there I received $id");
-    }
+    
 
 }

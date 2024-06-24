@@ -43,9 +43,21 @@ class Contactcontroller extends Controller{
         view('contact/update.php', ['input' => $input]);
     }
 
-    public function update($id){
+    public function update(Request $request, $id){
+        $request->table = 'contact';
+        $result = $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|valid'
+        ]);
         //Update Contact records here
-        dd("I received a post request from id: $id");
+        if($result){
+            $contact = new Contactmodel;
+            $contact->update($result);
+            $contact->save($id);
+            redirect('/');
+        }
+        exit();
     }
 }
 
